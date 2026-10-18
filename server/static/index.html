@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Positioning Analyzer</title>
+<style>
+:root {
+  --bg: #12131a; --panel: #1b1d27; --line: #2c2f3d; --text: #e8e9ee; --muted: #9a9db0;
+  --accent: #5dfc8d; --bad: #ff6b6b; --bar: #2c2f3d;
+}
+@media (prefers-color-scheme: light) { :root {
+  --bg: #f4f5f8; --panel: #ffffff; --line: #dcdee6; --text: #1d1f27; --muted: #5d6072;
+  --accent: #0f9d4b; --bad: #d43c3c; --bar: #e6e8ee; } }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px; }
+h1 { font-size: 22px; margin: 8px 0 4px; }
+.sub { color: var(--muted); margin: 0 0 16px; font-size: 14px; }
+section { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+label { display: block; font-size: 14px; color: var(--muted); margin-bottom: 4px; }
+input[type=text] { width: 100%; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--text); font: inherit; }
+.drop { margin-top: 12px; border: 2px dashed var(--line); border-radius: 12px; padding: 24px 12px; text-align: center; cursor: pointer; }
+.drop.over { border-color: var(--accent); }
+.drop b { color: var(--accent); }
+button { background: var(--accent); color: #000; border: 0; border-radius: 8px; padding: 10px 16px; font: inherit; font-weight: 600; cursor: pointer; }
+button.ghost { background: transparent; color: var(--muted); border: 1px solid var(--line); font-weight: 400; padding: 4px 10px; font-size: 13px; }
+button:disabled { opacity: .5; cursor: default; }
+.bar { height: 8px; background: var(--bar); border-radius: 99px; overflow: hidden; margin: 8px 0 4px; }
+.bar > div { height: 100%; background: var(--accent); width: 0; transition: width .4s; }
+.job { border-top: 1px solid var(--line); padding: 14px 0; }
+.job:first-of-type { border-top: 0; padding-top: 0; }
+.row { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.name { font-weight: 600; word-break: break-all; }
+.meta { color: var(--muted); font-size: 13px; }
+.err { color: var(--bad); font-size: 14px; margin-top: 6px; }
+.match { margin-top: 10px; padding: 10px 12px; background: var(--bg); border-radius: 8px; }
+.match a { color: var(--accent); font-weight: 600; text-decoration: none; }
+.match ul { margin: 6px 0 0; padding-left: 18px; font-size: 14px; }
+.empty { color: var(--muted); }
+#uploadStatus { font-size: 14px; color: var(--muted); margin-top: 8px; min-height: 1.2em; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Positioning Analyzer</h1>
+  <p class="sub">Upload a recording of a Brawl Stars replay. It finds the match, works out the map and brawlers, and writes a positioning report.</p>
+
+  <section>
+    <label for="player">Your in-game name</label>
+    <input type="text" id="player" placeholder="e.g. LOUIHBOOSHES" autocomplete="off">
+    <div class="drop" id="drop" tabindex="0" role="button" aria-label="Choose a recording">
+      <div><b>Choose a recording</b> or drop it here</div>
+      <div class="meta">MP4 or MOV from your phone's screen recorder</div>
+    </div>
+    <input type="file" id="file" accept="video/*" hidden>
+    <div class="bar" id="upBar" hidden><div></div></div>
+    <div id="uploadStatus"></div>
+  </section>
+
+  <section>
+    <div class="row"><h2 style="font-size:17px;margin:0 0 12px">Your matches</h2><span class="meta" id="retention"></span></div>
+    <div id="jobs"><p class="empty">Nothing yet. Upload a recording above.</p></div>
+  </section>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const player = $("player");
+try { player.value = localStorage.getItem("player") || ""; } catch {}
+fetch("/api/config").then(r => r.json()).then(c => {
+  if (!player.value && c.player) player.value = c.player;
+  $("retention").textContent = `Recordings are kept ${c.retention_days} days; reports stay.`;
+});
+player.addEventListener("change", () => { try { localStorage.setItem("player", player.value.trim()); } catch {} });
+
+const drop = $("drop"), file = $("file");
+drop.onclick = () => file.click();
+drop.onkeydown = e => { if (e.key === "Enter" || e.key === " ") file.click(); };
+drop.ondragover = e => { e.preventDefault(); drop.classList.add("over"); };
+drop.ondragleave = () => drop.classList.remove("over");
+drop.ondrop = e => { e.preventDefault(); drop.classList.remove("over"); if (e.dataTransfer.files[0]) upload(e.dataTransfer.files[0]); };
+file.onchange = () => { if (file.files[0]) upload(file.files[0]); file.value = ""; };
+
+function upload(f) {
+  if (!player.value.trim()) { $("uploadStatus").textContent = "Enter your in-game name first, so the report knows which player is you."; player.focus(); return; }
+  try { localStorage.setItem("player", player.value.trim()); } catch {}
+  const fd = new FormData(); fd.append("file", f); fd.append("player", player.value.trim());
+  const xhr = new XMLHttpRequest();
+  const bar = $("upBar");
+  bar.hidden = false; bar.firstElementChild.style.width = "0";
+  xhr.upload.onprogress = e => {
+    if (!e.lengthComputable) return;
+    const p = e.loaded / e.total;
+    bar.firstElementChild.style.width = `${p * 100}%`;
+    $("uploadStatus").textContent = `Uploading ${f.name}: ${Math.round(p * 100)}% of ${(e.total / 1e6).toFixed(0)} MB`;
+  };
+  xhr.onload = () => {
+    bar.hidden = true;
+    if (xhr.status === 200) { $("uploadStatus").textContent = "Uploaded. Analysing below; you can close this page and come back."; refresh(); }
+    else { let m = "Upload failed."; try { m = JSON.parse(xhr.responseText).detail || m; } catch {} $("uploadStatus").textContent = m; }
+  };
+  xhr.onerror = () => { bar.hidden = true; $("uploadStatus").textContent = "Upload failed: is the server still running?"; };
+  xhr.open("POST", "/api/uploads"); xhr.send(fd);
+}
+
+const when = t => new Date(t * 1000).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
+function render(list) {
+  if (!list.length) { $("jobs").innerHTML = '<p class="empty">Nothing yet. Upload a recording above.</p>'; return; }
+  $("jobs").innerHTML = list.map(j => {
+    const busy = j.status === "queued" || j.status === "running";
+    const pct = Math.round(j.progress * 100);
+    const matches = j.matches.map(m => `
+      <div class="match">
+        <div class="row"><a href="${esc(m.report)}">${esc(m.map)} · ${esc(m.brawler || "?")} →</a>
+          <span class="meta">${m.me_found ? "" : "couldn't find your name; check it"}</span></div>
+        <ul>${m.summary.map(s => `<li>${esc(s)}</li>`).join("")}</ul>
+      </div>`).join("");
+    return `<div class="job">
+      <div class="row"><span class="name">${esc(j.filename)}</span>
+        <span class="meta">${when(j.created)} ${busy ? "" : `<button class="ghost" data-del="${esc(j.id)}">Delete</button>`}</span></div>
+      ${busy ? `<div class="bar"><div style="width:${pct}%"></div></div><div class="meta">${j.status === "queued" ? "Waiting in line" : `${pct}% · ${esc(j.message)}`}</div>` : ""}
+      ${j.status === "failed" ? `<div class="err">${esc(j.message)}: ${esc(j.error || "")}</div>` : ""}
+      ${j.status === "done" && !j.matches.length ? '<div class="meta">No matches found.</div>' : ""}
+      ${matches}
+      ${j.status === "done" && !j.video_kept ? '<div class="meta">The recording has expired; the reports still work without video.</div>' : ""}
+    </div>`;
+  }).join("");
+  document.querySelectorAll("[data-del]").forEach(b => b.onclick = async () => {
+    if (!confirm("Delete this recording and its reports?")) return;
+    await fetch(`/api/jobs/${b.dataset.del}`, { method: "DELETE" }); refresh();
+  });
+}
+let timer = null;
+async function refresh() {
+  try {
+    const list = await (await fetch("/api/jobs")).json();
+    render(list);
+    clearTimeout(timer);
+    timer = setTimeout(refresh, list.some(j => j.status === "queued" || j.status === "running") ? 2000 : 15000);
+  } catch { timer = setTimeout(refresh, 5000); }
+}
+refresh();
+</script>
+</body>
+</html>

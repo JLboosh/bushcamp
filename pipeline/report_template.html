@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Positioning Report</title>
+<style>
+:root {
+  --bg: #12131a; --panel: #1b1d27; --line: #2c2f3d; --text: #e8e9ee; --muted: #9a9db0;
+  --me: #5dfc8d; --ally: #4aa8ff; --enemy: #ff5a5a; --warn: #ffb347; --good: #5dfc8d;
+}
+:root[data-theme="light"] {
+  --bg: #f4f5f8; --panel: #ffffff; --line: #dcdee6; --text: #1d1f27; --muted: #5d6072;
+  --me: #0f9d4b; --ally: #1f6fd1; --enemy: #d43c3c; --warn: #c27400; --good: #0f9d4b;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+header { padding: 16px; border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; }
+h1 { font-size: 20px; margin: 0; }
+h2 { font-size: 15px; margin: 0 0 8px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .04em; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px; font-size: 13px; color: var(--muted); }
+.chip b { color: var(--text); font-weight: 600; }
+main { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 16px; padding: 16px; max-width: 1500px; margin: 0 auto; }
+section { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; min-width: 0; }
+.full { grid-column: 1 / -1; }
+video { width: 100%; border-radius: 6px; background: #000; display: block; }
+.novideo { color: var(--muted); font-size: 13px; padding: 8px 0; }
+.mapwrap { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; }
+canvas#map { border-radius: 6px; max-width: 100%; height: auto; display: block; }
+.controls { display: flex; align-items: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.controls input[type=range] { flex: 1; min-width: 140px; }
+button { background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; font: inherit; cursor: pointer; }
+button[aria-pressed="true"] { border-color: var(--me); color: var(--me); }
+.time { font-variant-numeric: tabular-nums; min-width: 48px; text-align: right; }
+.legend { font-size: 13px; color: var(--muted); display: grid; gap: 4px; }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+ul.summary { margin: 0; padding-left: 18px; }
+ul.summary li { margin-bottom: 6px; }
+.transcript { max-height: 520px; overflow-y: auto; margin-top: 10px; }
+.line { display: grid; grid-template-columns: 46px 1fr; gap: 8px; padding: 6px 8px; border-radius: 6px; cursor: pointer; border-left: 3px solid transparent; }
+.line:hover { background: var(--bg); }
+.line.active { background: var(--bg); border-left-color: var(--me); }
+.line .ts { color: var(--muted); font-variant-numeric: tabular-nums; }
+.line .note { display: block; color: var(--warn); font-size: 12px; }
+.line.round { color: var(--muted); font-style: italic; }
+.line.suggestion { color: var(--good); margin-top: -4px; }
+.line.suggestion .ts { visibility: hidden; }
+svg { width: 100%; height: auto; display: block; }
+svg text { fill: var(--muted); font-size: 11px; }
+.footer { color: var(--muted); font-size: 12px; padding: 0 16px 24px; max-width: 1500px; margin: 0 auto; }
+@media (max-width: 900px) {
+  main { grid-template-columns: 1fr; padding: 12px; }
+  .mapwrap { grid-template-columns: 1fr; }
+  .transcript { max-height: none; }
+}
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) {
+  --bg: #f4f5f8; --panel: #ffffff; --line: #dcdee6; --text: #1d1f27; --muted: #5d6072;
+  --me: #0f9d4b; --ally: #1f6fd1; --enemy: #d43c3c; --warn: #c27400; --good: #0f9d4b; } }
+</style>
+</head>
+<body>
+<header>
+  <h1 id="title"></h1>
+  <div class="chips" id="chips"></div>
+</header>
+<main>
+  <section>
+    <h2>Your recording</h2>
+    <video id="video" controls playsinline preload="metadata"></video>
+    <div class="novideo" id="novideo" hidden>Couldn't load the recording, so the map plays on its own. Safari can't play it from a report opened as a file: open reports with <code>uv run python -m pipeline.serve</code> instead (and keep the video in data/raw/).</div>
+  </section>
+  <section>
+    <h2>Summary</h2>
+    <ul class="summary" id="summary"></ul>
+    <h2 style="margin-top:16px">Transcript</h2>
+    <div class="transcript" id="transcript"></div>
+  </section>
+  <section class="full">
+    <h2>Map replay</h2>
+    <div class="mapwrap">
+      <canvas id="map"></canvas>
+      <div class="legend">
+        <div><span class="dot" style="background:var(--me)"></span>You</div>
+        <div><span class="dot" style="background:var(--ally)"></span>Teammates</div>
+        <div><span class="dot" style="background:var(--enemy)"></span>Enemies</div>
+        <div>Filled = seen &nbsp;·&nbsp; ring = estimated between sightings &nbsp;·&nbsp; not drawn = position unknown</div>
+        <div>✕ = where you were eliminated, with your last 5 seconds</div>
+        <div><span style="color:var(--good)">➜</span> = a better spot you could have reached (shown for 2 s from the moment it applies)</div>
+        <div class="controls" style="margin-top:4px">
+          <button id="heat" aria-pressed="false">Heatmap</button>
+          <button id="deathsBtn" aria-pressed="true">Eliminations</button>
+          <button id="labels" aria-pressed="true">Names</button>
+        </div>
+      </div>
+    </div>
+    <div class="controls">
+      <button id="play">Play</button>
+      <input type="range" id="slider" min="0" max="1" step="0.1" value="0" aria-label="Match time">
+      <span class="time" id="clock">0:00</span>
+    </div>
+  </section>
+  <section class="full">
+    <h2>Spacing</h2>
+    <svg id="chart" role="img" aria-label="Distance to nearest teammate and nearest enemy over the match"></svg>
+    <div class="legend" style="margin-top:6px; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+      <div><span class="dot" style="background:var(--ally)"></span>Nearest teammate</div>
+      <div><span class="dot" style="background:var(--enemy)"></span>Nearest enemy</div>
+      <div>— — your range &nbsp; ····· nearest enemy's range</div>
+      <div>Shading: <span style="color:var(--enemy)">overextended / outnumbered</span>, <span style="color:var(--warn)">pushed into unseen enemies / isolated before death / passive</span>, <span style="color:var(--good)">good spacing / crossfire</span></div>
+    </div>
+  </section>
+</main>
+<div class="footer" id="footer"></div>
+<script>
+const D = __DATA__;
+const $ = id => document.getElementById(id);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const fmt = t => { t = Math.max(0, t); return `${Math.floor(t / 60)}:${String(Math.floor(t % 60)).padStart(2, "0")}`; };
+const T = D.t, N = T.length, STEP = D.step, T0 = T[0];
+const idx = t => Math.max(0, Math.min(N - 1, Math.round((t - T0) / STEP)));
+let now = T0;
+
+// ---- header ----
+$("title").textContent = D.title;
+document.title = `${D.map.name} report`;
+const s = D.stats;
+const chip = (k, v) => `<span class="chip">${k} <b>${v}</b></span>`;
+$("chips").innerHTML = [
+  chip("Brawler", `${s.brawler || "?"} (${s.own_range ?? "?"} tiles)`),
+  chip("Alive", `${Math.round(s.alive)} s`),
+  chip("Position known", `${Math.round(s.known)} s`),
+  s.spacing ? chip("Avg spacing", `${s.spacing.mean} tiles`) : "",
+  chip("Under enemy fire", `${Math.round(s.in_range)} s`),
+  chip("In bushes", `${Math.round(s.bush)} s`),
+].join("");
+$("footer").textContent = "Every number here is measured from the replay by code; sentences are fixed templates. " +
+  "Distances are in tiles. Times are replay time.";
+
+// ---- summary + transcript ----
+$("summary").innerHTML = D.summary.map(x => `<li>${x}</li>`).join("");
+const tr = $("transcript");
+D.transcript.forEach((l, i) => {
+  const div = document.createElement("div");
+  div.className = "line" + (l.type === "round_start" ? " round" : l.type === "suggestion" ? " suggestion" : "");
+  div.innerHTML = `<span class="ts">${l.clock}</span><span>${l.text}${l.note ? `<span class="note">${l.note}</span>` : ""}</span>`;
+  div.onclick = () => seek(l.t);
+  div.dataset.t = l.t; div.dataset.end = l.end;
+  tr.appendChild(div);
+});
+
+// ---- time mapping (rewinds show a moment twice: jump to the first) ----
+const CV = D.clock.video, CM = D.clock.match;
+function videoTimeFor(mt) {
+  let best = null, bd = Infinity;
+  for (let i = 0; i < CV.length; i++) {
+    if (CM[i] === null) continue;
+    const d = Math.abs(CM[i] - mt);
+    if (d < bd - 0.05) { bd = d; best = CV[i]; }
+  }
+  return best;
+}
+function matchTimeFor(vt) {
+  let lo = 0, hi = CV.length - 1;
+  while (lo < hi) { const mid = (lo + hi) >> 1; if (CV[mid] < vt) lo = mid + 1; else hi = mid; }
+  // Between two sampled frames of continuous playback: slide smoothly between them.
+  const a = Math.max(0, lo - 1), b = lo;
+  if (CM[a] !== null && CM[b] !== null && CV[b] > CV[a] && Math.abs((CM[b] - CM[a]) - (CV[b] - CV[a])) < 0.3 && vt >= CV[a] && vt <= CV[b])
+    return CM[a] + (vt - CV[a]) / (CV[b] - CV[a]) * (CM[b] - CM[a]);
+  for (let k = 0; k < 20; k++) {           // otherwise the nearest frame that has a match time
+    for (const j of [lo - k, lo + k]) if (j >= 0 && j < CM.length && CM[j] !== null) return CM[j];
+  }
+  return null;
+}
+
+// ---- video ----
+const video = $("video");
+let hasVideo = !!D.video;
+if (hasVideo) {
+  video.src = D.video;
+  video.onerror = () => { hasVideo = false; video.hidden = true; $("novideo").hidden = false; };
+} else { video.hidden = true; $("novideo").hidden = false; }
+// While the video plays, follow it every screen refresh (timeupdate only fires ~4x/s).
+function follow() {
+  if (!seeking) { const mt = matchTimeFor(video.currentTime); if (mt !== null) { now = mt; render(); } }
+  if (!video.paused && !video.ended) requestAnimationFrame(follow);
+}
+video.addEventListener("play", () => { $("play").textContent = "Pause"; requestAnimationFrame(follow); });
+video.addEventListener("pause", () => $("play").textContent = "Play");
+video.addEventListener("seeked", () => { if (video.paused) { const mt = matchTimeFor(video.currentTime); if (mt !== null) { now = mt; render(); } } });
+let seeking = false;
+function seek(mt) {
+  now = mt; render();
+  if (hasVideo) {
+    const vt = videoTimeFor(mt);
+    if (vt !== null) { seeking = true; video.currentTime = vt; setTimeout(() => seeking = false, 250); }
+  }
+}
+
+// ---- map ----
+const canvas = $("map"), ctx = canvas.getContext("2d");
+const img = new Image(); img.src = D.map.image;
+const M = D.map;
+let scale = 1;
+function sizeCanvas() {
+  const maxH = Math.min(window.innerHeight * 0.8, 760);
+  const avail = canvas.parentElement.clientWidth || 400;
+  scale = Math.min(maxH / M.height, (window.innerWidth < 900 ? avail : 520) / M.width);
+  canvas.width = Math.round(M.width * scale * devicePixelRatio);
+  canvas.height = Math.round(M.height * scale * devicePixelRatio);
+  canvas.style.width = `${Math.round(M.width * scale)}px`;
+  canvas.style.height = `${Math.round(M.height * scale)}px`;
+}
+const px = (x, y) => [(M.border + x * M.tile) * scale * devicePixelRatio, (M.border + y * M.tile) * scale * devicePixelRatio];
+const opts = { heat: false, deaths: true, labels: true };
+let COL = {};
+const refreshColours = () => { COL = { me: css("--me"), ally: css("--ally"), enemy: css("--enemy"), good: css("--good") }; };
+refreshColours();
+matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", () => { refreshColours(); render(); });
+// Position at any moment, sliding between the 0.1 s samples.
+function posAt(p, t) {
+  const f = (t - T0) / STEP, k = Math.floor(f), a = f - k;
+  const ok = i => i >= 0 && i < N && p.x[i] !== null && p.alive[i];
+  if (ok(k) && ok(k + 1)) return [p.x[k] + a * (p.x[k + 1] - p.x[k]), p.y[k] + a * (p.y[k + 1] - p.y[k])];
+  const n = Math.round(f);
+  return ok(n) ? [p.x[n], p.y[n]] : null;
+}
+const heatMax = Math.max(1, ...D.heatmap.flat());
+
+function drawMap() {
+  const r = devicePixelRatio, tile = M.tile * scale * r;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  if (img.complete) ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "rgba(0,0,0,0.25)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+  if (opts.heat) {
+    D.heatmap.forEach((row, y) => row.forEach((v, x) => {
+      if (!v) return;
+      const a = Math.sqrt(v / heatMax);
+      ctx.fillStyle = `rgba(255, ${Math.round(200 - 160 * a)}, 40, ${0.15 + 0.6 * a})`;
+      const [X, Y] = px(x, y); ctx.fillRect(X, Y, tile, tile);
+    }));
+  }
+  if (opts.deaths) {
+    ctx.lineWidth = 2 * r;
+    D.deaths.forEach(d => {
+      ctx.strokeStyle = COL.me; ctx.setLineDash([4 * r, 3 * r]); ctx.beginPath();
+      d.trail.forEach(([x, y], i) => { const [X, Y] = px(x, y); i ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y); });
+      ctx.stroke(); ctx.setLineDash([]);
+      if (d.pos) {
+        const [X, Y] = px(d.pos[0], d.pos[1]), k = 7 * r;
+        ctx.strokeStyle = "#fff"; ctx.lineWidth = 3 * r;
+        ctx.beginPath(); ctx.moveTo(X - k, Y - k); ctx.lineTo(X + k, Y + k); ctx.moveTo(X + k, Y - k); ctx.lineTo(X - k, Y + k); ctx.stroke();
+      }
+    });
+  }
+  const j = idx(now);
+  // own trail: the last second, fading out, ending exactly at your dot
+  const me = D.players.find(p => p.me);
+  if (me) {
+    const pts = [];
+    for (let t = now - 1; t <= now + 1e-6; t += STEP / 2) { const q = posAt(me, Math.min(t, now)); pts.push(q); }
+    ctx.strokeStyle = COL.me; ctx.lineWidth = 2.5 * r; ctx.lineCap = "round";
+    for (let i = 1; i < pts.length; i++) {
+      if (!pts[i - 1] || !pts[i]) continue;
+      ctx.globalAlpha = 0.6 * i / pts.length;
+      const [X0, Y0] = px(...pts[i - 1]), [X1, Y1] = px(...pts[i]);
+      ctx.beginPath(); ctx.moveTo(X0, Y0); ctx.lineTo(X1, Y1); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+  (D.suggestions || []).forEach(sg => {
+    // shown for 2 s from the moment it applies, fading out
+    if (now < sg.t - 0.2 || now > sg.t + 2) return;
+    ctx.globalAlpha = now <= sg.t + 1 ? 1 : Math.max(0, sg.t + 2 - now);
+    ctx.strokeStyle = COL.good; ctx.fillStyle = COL.good; ctx.lineWidth = 3 * r; ctx.setLineDash([6 * r, 4 * r]);
+    ctx.beginPath(); sg.route.forEach(([x, y], i) => { const [X, Y] = px(x, y); i ? ctx.lineTo(X, Y) : ctx.moveTo(X, Y); }); ctx.stroke();
+    ctx.setLineDash([]);
+    const [X, Y] = px(sg.to[0], sg.to[1]);
+    ctx.beginPath(); ctx.arc(X, Y, 9 * r, 0, Math.PI * 2); ctx.lineWidth = 3 * r; ctx.stroke();
+    ctx.beginPath(); ctx.arc(X, Y, 3 * r, 0, Math.PI * 2); ctx.fill();
+    ctx.globalAlpha = 1;
+  });
+  D.players.forEach(p => {
+    const q = posAt(p, now);
+    if (!q) return;
+    const col = p.me ? COL.me : p.team === "ally" ? COL.ally : COL.enemy;
+    const [X, Y] = px(q[0], q[1]), rad = (p.me ? 8 : 7) * r;
+    ctx.beginPath(); ctx.arc(X, Y, rad, 0, Math.PI * 2);
+    if (p.seen[j]) { ctx.fillStyle = col; ctx.fill(); ctx.strokeStyle = "#000"; ctx.lineWidth = 1.5 * r; ctx.stroke(); }
+    else { ctx.strokeStyle = col; ctx.lineWidth = 3 * r; ctx.stroke(); }
+    if (opts.labels) {
+      ctx.font = `${12 * r}px system-ui, sans-serif`; ctx.fillStyle = "#fff"; ctx.strokeStyle = "#000"; ctx.lineWidth = 3 * r;
+      const label = p.me ? "You" : p.name;
+      ctx.strokeText(label, X + rad + 3 * r, Y + 4 * r); ctx.fillText(label, X + rad + 3 * r, Y + 4 * r);
+    }
+  });
+}
+
+// ---- spacing chart ----
+const svg = $("chart");
+const W = 1000, H = 260, PL = 34, PR = 10, PT = 10, PB = 22;
+svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+const maxD = Math.max(12, ...D.spacing.ally.filter(v => v !== null), ...D.spacing.enemy.filter(v => v !== null),
+  D.spacing.own_range || 0) * 1.05;
+const sx = t => PL + (t - T0) / (T[N - 1] - T0 || 1) * (W - PL - PR);
+const sy = d => PT + (1 - d / maxD) * (H - PT - PB);
+function pathOf(vals) {
+  let d = "", pen = false;
+  vals.forEach((v, i) => { if (v === null) { pen = false; return; } d += `${pen ? "L" : "M"}${sx(T[i]).toFixed(1)},${sy(v).toFixed(1)}`; pen = true; });
+  return d;
+}
+function drawChart() {
+  const ns = "http://www.w3.org/2000/svg";
+  const parts = [];
+  const colours = { overextended: "--enemy", outnumbered: "--enemy", risky_push: "--warn", isolated_before_death: "--warn", too_passive: "--warn", good_spacing: "--good", crossfire: "--good" };
+  D.events.forEach(e => {
+    if (!colours[e.type] || e.type === "eliminated") return;
+    parts.push(`<rect x="${sx(e.start)}" y="${PT}" width="${Math.max(2, sx(e.end + STEP) - sx(e.start))}" height="${H - PT - PB}" fill="var(${colours[e.type]})" opacity="0.13"/>`);
+  });
+  for (let d = 0; d <= maxD; d += 2) parts.push(`<line x1="${PL}" x2="${W - PR}" y1="${sy(d)}" y2="${sy(d)}" stroke="var(--line)"/><text x="${PL - 6}" y="${sy(d) + 4}" text-anchor="end">${d}</text>`);
+  for (let t = Math.ceil(T0 / 10) * 10; t <= T[N - 1]; t += 10) parts.push(`<text x="${sx(t)}" y="${H - 6}" text-anchor="middle">${fmt(t)}</text>`);
+  D.rounds.forEach((r, i) => parts.push(`<line x1="${sx(r.start)}" x2="${sx(r.start)}" y1="${PT}" y2="${H - PB}" stroke="var(--muted)" stroke-dasharray="2 3"/><text x="${sx(r.start) + 4}" y="${PT + 22}">Round ${i + 1}</text>`));
+  if (D.spacing.own_range) parts.push(`<line x1="${PL}" x2="${W - PR}" y1="${sy(D.spacing.own_range)}" y2="${sy(D.spacing.own_range)}" stroke="var(--me)" stroke-dasharray="8 5" opacity="0.8"/>`);
+  parts.push(`<path d="${pathOf(D.spacing.enemy_range)}" fill="none" stroke="var(--enemy)" stroke-dasharray="1 4" stroke-width="2" opacity="0.8"/>`);
+  parts.push(`<path d="${pathOf(D.spacing.ally)}" fill="none" stroke="var(--ally)" stroke-width="2"/>`);
+  parts.push(`<path d="${pathOf(D.spacing.enemy)}" fill="none" stroke="var(--enemy)" stroke-width="2"/>`);
+  D.deaths.forEach(d => parts.push(`<text x="${sx(d.t)}" y="${PT + 22}" text-anchor="middle" style="fill:var(--text);font-size:14px">✕</text>`));
+  parts.push(`<line id="cursor" x1="0" x2="0" y1="${PT}" y2="${H - PB}" stroke="var(--text)" stroke-width="1.5"/>`);
+  parts.push(`<rect id="hit" x="${PL}" y="${PT}" width="${W - PL - PR}" height="${H - PT - PB}" fill="transparent" style="cursor:pointer"/>`);
+  svg.innerHTML = parts.join("");
+  svg.querySelector("#hit").addEventListener("click", ev => {
+    const box = svg.getBoundingClientRect();
+    const x = (ev.clientX - box.left) / box.width * W;
+    seek(T0 + (x - PL) / (W - PL - PR) * (T[N - 1] - T0));
+  });
+}
+
+// ---- wiring ----
+const slider = $("slider");
+slider.min = T0; slider.max = T[N - 1]; slider.step = STEP;
+slider.addEventListener("input", () => seek(parseFloat(slider.value)));
+let timer = null;
+$("play").onclick = () => {
+  if (hasVideo) { video.paused ? video.play() : video.pause(); return; }
+  if (timer) { timer = null; $("play").textContent = "Play"; return; }
+  $("play").textContent = "Pause";
+  let last = performance.now();
+  timer = true;
+  const tick = ts => {
+    if (!timer) return;
+    now = Math.min(T[N - 1], now + (ts - last) / 1000); last = ts; render();
+    if (now >= T[N - 1]) { timer = null; $("play").textContent = "Play"; return; }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+};
+for (const [id, key] of [["heat", "heat"], ["deathsBtn", "deaths"], ["labels", "labels"]]) {
+  $(id).onclick = () => { opts[key] = !opts[key]; $(id).setAttribute("aria-pressed", opts[key]); render(); };
+}
+let lastActive = null;
+function render() {
+  drawMap();
+  slider.value = now; $("clock").textContent = fmt(now);
+  const c = svg.querySelector("#cursor"); if (c) { c.setAttribute("x1", sx(now)); c.setAttribute("x2", sx(now)); }
+  const lines = [...tr.children];
+  const active = lines.filter(l => +l.dataset.t <= now + 0.05).pop() || null;
+  if (active !== lastActive) {
+    lastActive?.classList.remove("active"); active?.classList.add("active");
+    if (active && !tr.matches(":hover")) active.scrollIntoView({ block: "nearest" });
+    lastActive = active;
+  }
+}
+img.onload = render;
+window.addEventListener("resize", () => { sizeCanvas(); render(); });
+sizeCanvas(); drawChart(); render();
+const fromHash = /t=([\d.]+)/.exec(location.hash);   // report.html#t=12.5 opens at that match time
+if (fromHash) seek(parseFloat(fromHash[1]));
+</script>
+</body>
+</html>

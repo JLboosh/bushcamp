@@ -1,0 +1,42 @@
+{
+  "_note": "Event thresholds (tiles and seconds). Edit to tune; see pipeline/events.py.",
+  "overextended": {
+    "ahead_tiles": 3.0,
+    "min_s": 1.0,
+    "_note": "ahead of the nearest teammate along the map's direction of play AND an enemy has a clear shot that no teammate can return"
+  },
+  "outnumbered": {
+    "min_enemies": 2,
+    "min_s": 0.5,
+    "_note": "2+ enemies have a clear shot at you and no teammate can shoot back at any of them"
+  },
+  "isolated_before_death": {
+    "window_s": 5.0,
+    "min_isolated_s": 3.0,
+    "_note": "seconds in the window under fire that no teammate could return"
+  },
+  "good_spacing": {
+    "band_tiles": 1.5,
+    "min_s": 4.0
+  },
+  "too_passive": {
+    "min_s": 6.0
+  },
+  "merge_gap_s": 0.5,
+  "suggest": {
+    "_note": "see pipeline/suggest.py",
+    "horizon_s": 1.5,
+    "speed_tiles_per_s": 2.4,
+    "safety_margin": 0.5,
+    "min_gain": 2.0
+  },
+  "crossfire": {
+    "min_s": 1.0,
+    "_note": "you and a teammate both had a clear shot at the same enemy from 45+ degrees apart"
+  },
+  "risky_push": {
+    "ahead_tiles": 3.0,
+    "min_s": 0.5,
+    "_note": "ahead of the team where an enemy you lost sight of (bush / off screen, seen in the last 4 s) could have reached you"
+  }
+}

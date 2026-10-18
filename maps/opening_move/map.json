@@ -1,0 +1,13 @@
+{
+  "name": "Opening Move",
+  "mode": "Knockout",
+  "image": "Opening_Move-Map.webp",
+  "cols": 21,
+  "rows": 33,
+  "border": 16,
+  "tile_px": 32,
+  "source": "Brawlify",
+  "bush_raise": 0.81,
+  "bush_raise_measured_from": "floor checker squares, 1000075100 (2026-10-15)",
+  "ground_check": "checker"
+}

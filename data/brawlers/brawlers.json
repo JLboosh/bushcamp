@@ -1,0 +1,769 @@
+{
+  "source": "Brawl Stars wiki (brawlstars.fandom.com), CC BY-SA 3.0",
+  "fetched": "2026-10-15",
+  "brawlers": {
+    "8-Bit": {
+      "range": 10.0,
+      "range_text": "10 (Very Long)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/8-Bit",
+      "portrait": "portraits/8_bit.png"
+    },
+    "Alli": {
+      "range": 2.67,
+      "range_text": "2.67 (dash)",
+      "cls": "Assassin",
+      "wiki": "https://brawlstars.fandom.com/wiki/Alli",
+      "portrait": "portraits/alli.png"
+    },
+    "Amber": {
+      "range": 8.33,
+      "range_text": "8.33 (Long)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Amber",
+      "portrait": "portraits/amber.png"
+    },
+    "Angelo": {
+      "range": 10.0,
+      "range_text": "10 (Very Long)",
+      "cls": "Marksman",
+      "wiki": "https://brawlstars.fandom.com/wiki/Angelo",
+      "portrait": "portraits/angelo.png"
+    },
+    "Ash": {
+      "range": 4.67,
+      "range_text": "4.67 (Normal)",
+      "cls": "Tank",
+      "wiki": "https://brawlstars.fandom.com/wiki/Ash",
+      "portrait": "portraits/ash.png"
+    },
+    "Barley": {
+      "range": 7.33,
+      "range_text": "7.33 (Long)",
+      "cls": "Artillery",
+      "wiki": "https://brawlstars.fandom.com/wiki/Barley",
+      "portrait": "portraits/barley.png"
+    },
+    "Bea": {
+      "range": 10.0,
+      "range_text": "10 (Very Long)",
+      "cls": "Marksman",
+      "wiki": "https://brawlstars.fandom.com/wiki/Bea",
+      "portrait": "portraits/bea.png"
+    },
+    "Belle": {
+      "range": 10.0,
+      "range_text": "10 (Very Long)",
+      "cls": "Marksman",
+      "wiki": "https://brawlstars.fandom.com/wiki/Belle",
+      "portrait": "portraits/belle.png"
+    },
+    "Berry": {
+      "range": 6.33,
+      "range_text": "6.33 (Normal)",
+      "cls": "Support",
+      "wiki": "https://brawlstars.fandom.com/wiki/Berry",
+      "portrait": "portraits/berry.png"
+    },
+    "Bibi": {
+      "range": 3.67,
+      "range_text": "3.67 (Short)",
+      "cls": "Tank",
+      "wiki": "https://brawlstars.fandom.com/wiki/Bibi",
+      "portrait": "portraits/bibi.png"
+    },
+    "Bo": {
+      "range": 8.67,
+      "range_text": "8.67 (Long)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Bo",
+      "portrait": "portraits/bo.png"
+    },
+    "Bolt": {
+      "range": null,
+      "range_text": null,
+      "cls": "Tank",
+      "wiki": "https://brawlstars.fandom.com/wiki/Bolt",
+      "portrait": "portraits/bolt.png"
+    },
+    "Bonnie": {
+      "range": 9.0,
+      "range_text": "9 (Clyde; Long)",
+      "cls": "Marksman",
+      "wiki": "https://brawlstars.fandom.com/wiki/Bonnie",
+      "portrait": "portraits/bonnie.png"
+    },
+    "Brock": {
+      "range": 9.0,
+      "range_text": "9 (Long)",
+      "cls": "Marksman",
+      "wiki": "https://brawlstars.fandom.com/wiki/Brock",
+      "portrait": "portraits/brock.png"
+    },
+    "Bull": {
+      "range": 5.33,
+      "range_text": "5.33 (Normal)",
+      "cls": "Tank",
+      "wiki": "https://brawlstars.fandom.com/wiki/Bull",
+      "portrait": "portraits/bull.png"
+    },
+    "Buster": {
+      "range": 5.33,
+      "range_text": "5.33 (Normal)",
+      "cls": "Tank",
+      "wiki": "https://brawlstars.fandom.com/wiki/Buster",
+      "portrait": "portraits/buster.png"
+    },
+    "Buzz": {
+      "range": 2.67,
+      "range_text": "2.67 (Short)",
+      "cls": "Assassin",
+      "wiki": "https://brawlstars.fandom.com/wiki/Buzz",
+      "portrait": "portraits/buzz.png"
+    },
+    "Buzz Lightyear": {
+      "range": null,
+      "range_text": null,
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Buzz_Lightyear",
+      "portrait": "portraits/buzz_lightyear.png"
+    },
+    "Byron": {
+      "range": 10.0,
+      "range_text": "10 (Very Long)",
+      "cls": "Support",
+      "wiki": "https://brawlstars.fandom.com/wiki/Byron",
+      "portrait": "portraits/byron.png"
+    },
+    "Carl": {
+      "range": 8.33,
+      "range_text": "8.33 (Long)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Carl",
+      "portrait": "portraits/carl.png"
+    },
+    "Charlie": {
+      "range": 9.0,
+      "range_text": "9 (Long)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Charlie",
+      "portrait": "portraits/charlie.png"
+    },
+    "Chester": {
+      "range": 8.33,
+      "range_text": "8.33 (Long)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Chester",
+      "portrait": "portraits/chester.png"
+    },
+    "Chuck": {
+      "range": 6.0,
+      "range_text": "6 (Normal)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Chuck",
+      "portrait": "portraits/chuck.png"
+    },
+    "Clancy": {
+      "range": 7.67,
+      "range_text": "7.67 (Long)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Clancy",
+      "portrait": "portraits/clancy.png"
+    },
+    "Colette": {
+      "range": 8.67,
+      "range_text": "8.67 (Long)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Colette",
+      "portrait": "portraits/colette.png"
+    },
+    "Colt": {
+      "range": 9.0,
+      "range_text": "9 (Long)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Colt",
+      "portrait": "portraits/colt.png"
+    },
+    "Cordelius": {
+      "range": 5.33,
+      "range_text": "5.33 (Normal)",
+      "cls": "Assassin",
+      "wiki": "https://brawlstars.fandom.com/wiki/Cordelius",
+      "portrait": "portraits/cordelius.png"
+    },
+    "Cosmo": {
+      "range": 9.0,
+      "range_text": "9 (Long)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Cosmo",
+      "portrait": "portraits/cosmo.png"
+    },
+    "Crow": {
+      "range": 8.67,
+      "range_text": "8.67 (Long)",
+      "cls": "Assassin",
+      "wiki": "https://brawlstars.fandom.com/wiki/Crow",
+      "portrait": "portraits/crow.png"
+    },
+    "Damian": {
+      "range": 2.67,
+      "range_text": "2.67 (Short)",
+      "cls": "Tank",
+      "wiki": "https://brawlstars.fandom.com/wiki/Damian",
+      "portrait": "portraits/damian.png"
+    },
+    "Darryl": {
+      "range": 6.0,
+      "range_text": "6 (Normal)",
+      "cls": "Tank",
+      "wiki": "https://brawlstars.fandom.com/wiki/Darryl",
+      "portrait": "portraits/darryl.png"
+    },
+    "Doug": {
+      "range": 3.33,
+      "range_text": "3.33 (Short)",
+      "cls": "Support",
+      "wiki": "https://brawlstars.fandom.com/wiki/Doug",
+      "portrait": "portraits/doug.png"
+    },
+    "Draco": {
+      "range": 4.0,
+      "range_text": "4 (Normal)",
+      "cls": "Tank",
+      "wiki": "https://brawlstars.fandom.com/wiki/Draco",
+      "portrait": "portraits/draco.png"
+    },
+    "Dynamike": {
+      "range": 7.33,
+      "range_text": "7.33 (Long)",
+      "cls": "Artillery",
+      "wiki": "https://brawlstars.fandom.com/wiki/Dynamike",
+      "portrait": "portraits/dynamike.png"
+    },
+    "Edgar": {
+      "range": 2.0,
+      "range_text": "2 (Short)",
+      "cls": "Assassin",
+      "wiki": "https://brawlstars.fandom.com/wiki/Edgar",
+      "portrait": "portraits/edgar.png"
+    },
+    "El Primo": {
+      "range": 3.0,
+      "range_text": "3 (Short)",
+      "cls": "Tank",
+      "wiki": "https://brawlstars.fandom.com/wiki/El_Primo",
+      "portrait": "portraits/el_primo.png"
+    },
+    "Emz": {
+      "range": 6.67,
+      "range_text": "6.67 (Normal)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Emz",
+      "portrait": "portraits/emz.png"
+    },
+    "Eve": {
+      "range": 9.33,
+      "range_text": "9.33 (Very Long)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Eve",
+      "portrait": "portraits/eve.png"
+    },
+    "Fang": {
+      "range": 2.67,
+      "range_text": "2.67 (kick; Short)",
+      "cls": "Assassin",
+      "wiki": "https://brawlstars.fandom.com/wiki/Fang",
+      "portrait": "portraits/fang.png"
+    },
+    "Finx": {
+      "range": 8.33,
+      "range_text": "8.33 (middle; Long)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Finx",
+      "portrait": "portraits/finx.png"
+    },
+    "Frank": {
+      "range": 6.0,
+      "range_text": "6 (Normal)",
+      "cls": "Tank",
+      "wiki": "https://brawlstars.fandom.com/wiki/Frank",
+      "portrait": "portraits/frank.png"
+    },
+    "Gale": {
+      "range": 8.33,
+      "range_text": "8.33 (Long)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Gale",
+      "portrait": "portraits/gale.png"
+    },
+    "Gene": {
+      "range": 5.67,
+      "range_text": "5.67 (close range; Normal)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Gene",
+      "portrait": "portraits/gene.png"
+    },
+    "Gigi": {
+      "range": 2.33,
+      "range_text": "2.33 (Short)",
+      "cls": "Assassin",
+      "wiki": "https://brawlstars.fandom.com/wiki/Gigi",
+      "portrait": "portraits/gigi.png"
+    },
+    "Glowy": {
+      "range": 7.33,
+      "range_text": "7.33 (Normal)",
+      "cls": "Support",
+      "wiki": "https://brawlstars.fandom.com/wiki/Glowy",
+      "portrait": "portraits/glowy.png"
+    },
+    "Gray": {
+      "range": 9.0,
+      "range_text": "9 (Long)",
+      "cls": "Support",
+      "wiki": "https://brawlstars.fandom.com/wiki/Gray",
+      "portrait": "portraits/gray.png"
+    },
+    "Griff": {
+      "range": 8.33,
+      "range_text": "8.33 (Long)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Griff",
+      "portrait": "portraits/griff.png"
+    },
+    "Grom": {
+      "range": 7.67,
+      "range_text": "7.67 (Long)",
+      "cls": "Artillery",
+      "wiki": "https://brawlstars.fandom.com/wiki/Grom",
+      "portrait": "portraits/grom.png"
+    },
+    "Gus": {
+      "range": 9.33,
+      "range_text": "9.33 (Very Long)",
+      "cls": "Support",
+      "wiki": "https://brawlstars.fandom.com/wiki/Gus",
+      "portrait": "portraits/gus.png"
+    },
+    "Hank": {
+      "range": 1.67,
+      "range_text": "1.67 (min. range)",
+      "cls": "Tank",
+      "wiki": "https://brawlstars.fandom.com/wiki/Hank",
+      "portrait": "portraits/hank.png"
+    },
+    "Jacky": {
+      "range": 3.33,
+      "range_text": "3.33 (Short)",
+      "cls": "Tank",
+      "wiki": "https://brawlstars.fandom.com/wiki/Jacky",
+      "portrait": "portraits/jacky.png"
+    },
+    "Jae-yong": {
+      "range": 8.33,
+      "range_text": "8.33 (Long)",
+      "cls": "Support",
+      "wiki": "https://brawlstars.fandom.com/wiki/Jae-yong",
+      "portrait": "portraits/jae_yong.png"
+    },
+    "Janet": {
+      "range": 4.0,
+      "range_text": "4 (min range; Normal)",
+      "cls": "Marksman",
+      "wiki": "https://brawlstars.fandom.com/wiki/Janet",
+      "portrait": "portraits/janet.png"
+    },
+    "Jessie": {
+      "range": 9.0,
+      "range_text": "9 (Long)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Jessie",
+      "portrait": "portraits/jessie.png"
+    },
+    "Juju": {
+      "range": 6.33,
+      "range_text": "6.33 (Normal)",
+      "cls": "Artillery",
+      "wiki": "https://brawlstars.fandom.com/wiki/Juju",
+      "portrait": "portraits/juju.png"
+    },
+    "Kaze": {
+      "range": null,
+      "range_text": null,
+      "cls": "Assassin",
+      "wiki": "https://brawlstars.fandom.com/wiki/Kaze",
+      "portrait": "portraits/kaze.png"
+    },
+    "Kenji": {
+      "range": 2.67,
+      "range_text": "2.67 (dash; Short)",
+      "cls": "Assassin",
+      "wiki": "https://brawlstars.fandom.com/wiki/Kenji",
+      "portrait": "portraits/kenji.png"
+    },
+    "Kit": {
+      "range": 3.67,
+      "range_text": "3.67 (Short)",
+      "cls": "Support",
+      "wiki": "https://brawlstars.fandom.com/wiki/Kit",
+      "portrait": "portraits/kit.png"
+    },
+    "Larry & Lawrie": {
+      "range": 7.33,
+      "range_text": "7.33 (Long)",
+      "cls": "Artillery",
+      "wiki": "https://brawlstars.fandom.com/wiki/Larry_%26_Lawrie",
+      "portrait": "portraits/larry_lawrie.png"
+    },
+    "Leon": {
+      "range": 9.67,
+      "range_text": "9.67 (Very Long)",
+      "cls": "Assassin",
+      "wiki": "https://brawlstars.fandom.com/wiki/Leon",
+      "portrait": "portraits/leon.png"
+    },
+    "Lily": {
+      "range": 2.0,
+      "range_text": "2 (Short)",
+      "cls": "Assassin",
+      "wiki": "https://brawlstars.fandom.com/wiki/Lily",
+      "portrait": "portraits/lily.png"
+    },
+    "Lola": {
+      "range": 9.0,
+      "range_text": "9 (Long)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Lola",
+      "portrait": "portraits/lola.png"
+    },
+    "Lou": {
+      "range": 9.33,
+      "range_text": "9.33 (Very Long)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Lou",
+      "portrait": "portraits/lou.png"
+    },
+    "Lumi": {
+      "range": 8.0,
+      "range_text": "8 (Long)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Lumi",
+      "portrait": "portraits/lumi.png"
+    },
+    "Maisie": {
+      "range": 8.67,
+      "range_text": "8.67 (Long)",
+      "cls": "Marksman",
+      "wiki": "https://brawlstars.fandom.com/wiki/Maisie",
+      "portrait": "portraits/maisie.png"
+    },
+    "Mandy": {
+      "range": 9.0,
+      "range_text": "9 (Long)",
+      "cls": "Marksman",
+      "wiki": "https://brawlstars.fandom.com/wiki/Mandy",
+      "portrait": "portraits/mandy.png"
+    },
+    "Max": {
+      "range": 8.33,
+      "range_text": "8.33 (Long)",
+      "cls": "Support",
+      "wiki": "https://brawlstars.fandom.com/wiki/Max",
+      "portrait": "portraits/max.png"
+    },
+    "Meeple": {
+      "range": 7.67,
+      "range_text": "7.67 (Long)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Meeple",
+      "portrait": "portraits/meeple.png"
+    },
+    "Meg": {
+      "range": 9.0,
+      "range_text": "9 (Long)",
+      "cls": "Tank",
+      "wiki": "https://brawlstars.fandom.com/wiki/Meg",
+      "portrait": "portraits/meg.png"
+    },
+    "Melodie": {
+      "range": 8.0,
+      "range_text": "8 (Long)",
+      "cls": "Assassin",
+      "wiki": "https://brawlstars.fandom.com/wiki/Melodie",
+      "portrait": "portraits/melodie.png"
+    },
+    "Mico": {
+      "range": 4.0,
+      "range_text": "4 (Normal)",
+      "cls": "Assassin",
+      "wiki": "https://brawlstars.fandom.com/wiki/Mico",
+      "portrait": "portraits/mico.png"
+    },
+    "Mina": {
+      "range": 8.0,
+      "range_text": "8 (first sequence; Long)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Mina",
+      "portrait": "portraits/mina.png"
+    },
+    "Moe": {
+      "range": 7.67,
+      "range_text": "7.67 (Long)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Moe",
+      "portrait": "portraits/moe.png"
+    },
+    "Mortis": {
+      "range": 2.67,
+      "range_text": "2.67 (Short)",
+      "cls": "Assassin",
+      "wiki": "https://brawlstars.fandom.com/wiki/Mortis",
+      "portrait": "portraits/mortis.png"
+    },
+    "Mr. P": {
+      "range": 7.0,
+      "range_text": "7 (Long)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Mr._P",
+      "portrait": "portraits/mr_p.png"
+    },
+    "Najia": {
+      "range": 6.0,
+      "range_text": "6 (jar; Normal)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Najia",
+      "portrait": "portraits/najia.png"
+    },
+    "Nani": {
+      "range": 8.67,
+      "range_text": "8.67 (Long)",
+      "cls": "Marksman",
+      "wiki": "https://brawlstars.fandom.com/wiki/Nani",
+      "portrait": "portraits/nani.png"
+    },
+    "Nita": {
+      "range": 6.0,
+      "range_text": "6 (Normal)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Nita",
+      "portrait": "portraits/nita.png"
+    },
+    "Nori": {
+      "range": 8.33,
+      "range_text": "8.33 (melee; Very Long)",
+      "cls": "Assassin",
+      "wiki": "https://brawlstars.fandom.com/wiki/Nori",
+      "portrait": "portraits/nori.png"
+    },
+    "Ollie": {
+      "range": 6.33,
+      "range_text": "6.33 (Normal)",
+      "cls": "Tank",
+      "wiki": "https://brawlstars.fandom.com/wiki/Ollie",
+      "portrait": "portraits/ollie.png"
+    },
+    "Otis": {
+      "range": 9.0,
+      "range_text": "9 (Long)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Otis",
+      "portrait": "portraits/otis.png"
+    },
+    "Pam": {
+      "range": 9.0,
+      "range_text": "9 (Long)",
+      "cls": "Support",
+      "wiki": "https://brawlstars.fandom.com/wiki/Pam",
+      "portrait": "portraits/pam.png"
+    },
+    "Pearl": {
+      "range": 9.0,
+      "range_text": "9 (Long)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Pearl",
+      "portrait": "portraits/pearl.png"
+    },
+    "Penny": {
+      "range": 8.67,
+      "range_text": "8.67 (Long)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Penny",
+      "portrait": "portraits/penny.png"
+    },
+    "Pierce": {
+      "range": 10.0,
+      "range_text": "10 (Very Long)",
+      "cls": "Marksman",
+      "wiki": "https://brawlstars.fandom.com/wiki/Pierce",
+      "portrait": "portraits/pierce.png"
+    },
+    "Piper": {
+      "range": 10.0,
+      "range_text": "10 (Very Long)",
+      "cls": "Marksman",
+      "wiki": "https://brawlstars.fandom.com/wiki/Piper",
+      "portrait": "portraits/piper.png"
+    },
+    "Poco": {
+      "range": 7.0,
+      "range_text": "7 (Long)",
+      "cls": "Support",
+      "wiki": "https://brawlstars.fandom.com/wiki/Poco",
+      "portrait": "portraits/poco.png"
+    },
+    "R-T": {
+      "range": 10.0,
+      "range_text": "10 (Very Long)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/R-T",
+      "portrait": "portraits/r_t.png"
+    },
+    "Rico": {
+      "range": 9.67,
+      "range_text": "9.67 (Very Long)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Rico",
+      "portrait": "portraits/rico.png"
+    },
+    "Rosa": {
+      "range": 3.67,
+      "range_text": "3.67 (Short)",
+      "cls": "Tank",
+      "wiki": "https://brawlstars.fandom.com/wiki/Rosa",
+      "portrait": "portraits/rosa.png"
+    },
+    "Ruffs": {
+      "range": 9.0,
+      "range_text": "9 (Long)",
+      "cls": "Support",
+      "wiki": "https://brawlstars.fandom.com/wiki/Ruffs",
+      "portrait": "portraits/ruffs.png"
+    },
+    "Sam": {
+      "range": 3.0,
+      "range_text": "3 (Short)",
+      "cls": "Assassin",
+      "wiki": "https://brawlstars.fandom.com/wiki/Sam",
+      "portrait": "portraits/sam.png"
+    },
+    "Sandy": {
+      "range": 6.0,
+      "range_text": "6 (Normal)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Sandy",
+      "portrait": "portraits/sandy.png"
+    },
+    "Shade": {
+      "range": 3.67,
+      "range_text": "3.67 (Short)",
+      "cls": "Assassin",
+      "wiki": "https://brawlstars.fandom.com/wiki/Shade",
+      "portrait": "portraits/shade.png"
+    },
+    "Shelly": {
+      "range": 7.67,
+      "range_text": "7.67 (Long)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Shelly",
+      "portrait": "portraits/shelly.png"
+    },
+    "Sirius": {
+      "range": 7.33,
+      "range_text": "7.33 (Long)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Sirius",
+      "portrait": "portraits/sirius.png"
+    },
+    "Spike": {
+      "range": 7.67,
+      "range_text": "7.67 (Long)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Spike",
+      "portrait": "portraits/spike.png"
+    },
+    "Sprout": {
+      "range": 5.0,
+      "range_text": "5 (throw; Normal)",
+      "cls": "Artillery",
+      "wiki": "https://brawlstars.fandom.com/wiki/Sprout",
+      "portrait": "portraits/sprout.png"
+    },
+    "Squeak": {
+      "range": 7.67,
+      "range_text": "7.67 (Long)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Squeak",
+      "portrait": "portraits/squeak.png"
+    },
+    "Starr Nova": {
+      "range": 5.67,
+      "range_text": "5.67 (Normal)",
+      "cls": "Assassin",
+      "wiki": "https://brawlstars.fandom.com/wiki/Starr_Nova",
+      "portrait": "portraits/starr_nova.png"
+    },
+    "Stu": {
+      "range": 7.67,
+      "range_text": "7.67 (Long)",
+      "cls": "Assassin",
+      "wiki": "https://brawlstars.fandom.com/wiki/Stu",
+      "portrait": "portraits/stu.png"
+    },
+    "Surge": {
+      "range": 6.67,
+      "range_text": "6.67 (Normal)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Surge",
+      "portrait": "portraits/surge.png"
+    },
+    "Tara": {
+      "range": 8.0,
+      "range_text": "8 (Long)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Tara",
+      "portrait": "portraits/tara.png"
+    },
+    "Tick": {
+      "range": 8.67,
+      "range_text": "8.67 (Long)",
+      "cls": "Artillery",
+      "wiki": "https://brawlstars.fandom.com/wiki/Tick",
+      "portrait": "portraits/tick.png"
+    },
+    "Trunk": {
+      "range": 3.33,
+      "range_text": "3.33 (Short)",
+      "cls": "Tank",
+      "wiki": "https://brawlstars.fandom.com/wiki/Trunk",
+      "portrait": "portraits/trunk.png"
+    },
+    "Vince": {
+      "range": 8.33,
+      "range_text": "8.33 (Long)",
+      "cls": "Damage Dealer",
+      "wiki": "https://brawlstars.fandom.com/wiki/Vince",
+      "portrait": "portraits/vince.png"
+    },
+    "Wendy": {
+      "range": 8.0,
+      "range_text": "8 (Long)",
+      "cls": "Support",
+      "wiki": "https://brawlstars.fandom.com/wiki/Wendy",
+      "portrait": "portraits/wendy.png"
+    },
+    "Willow": {
+      "range": 7.33,
+      "range_text": "7.33 (Long)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Willow",
+      "portrait": "portraits/willow.png"
+    },
+    "Ziggy": {
+      "range": 7.33,
+      "range_text": "7.33 (Long)",
+      "cls": "Controller",
+      "wiki": "https://brawlstars.fandom.com/wiki/Ziggy",
+      "portrait": "portraits/ziggy.png"
+    }
+  }
+}

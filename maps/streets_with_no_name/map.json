@@ -1,0 +1,13 @@
+{
+  "name": "Streets with No Name",
+  "mode": "Knockout",
+  "image": "Streets_with_No_Name-Map.webp",
+  "cols": 21,
+  "rows": 33,
+  "border": 16,
+  "tile_px": 32,
+  "source": "Brawlify",
+  "bush_raise": 0.52,
+  "bush_raise_measured_from": "flat water pools, 146 frames (2026-10-15)",
+  "ground_check": "water"
+}

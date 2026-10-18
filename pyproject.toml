@@ -1,0 +1,25 @@
+[project]
+name = "bushcamp"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi>=0.143.2",
+    "lap>=0.5.13",
+    "numpy>=2.5.3",
+    "opencv-python-headless>=5.0.0.93",
+    "python-multipart>=0.0.32",
+    "rapidocr-onnxruntime>=1.4.4",
+    "scipy>=1.18.1",
+    "ultralytics>=8.4.177",
+    "uvicorn>=0.54.0",
+]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=9.1.1",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

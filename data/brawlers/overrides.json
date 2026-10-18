@@ -1,0 +1,20 @@
+{
+  "_note": "Hand-kept corrections; each entry overrides fields from brawlers.json, e.g. {\"Colt\": {\"range\": 9.0}} \"over_walls\": true marks brawlers whose attacks go over walls (default: the Artillery class).",
+  "Kaze": {
+    "range": 6.33,
+    "range_text": "Ninja form 6 1/3, Geisha form 2.67 (from the user, 2026-10-15)",
+    "forms": {
+      "Ninja": 6.33,
+      "Geisha": 2.67
+    },
+    "_note": "range = the longer form, used for how far an enemy Kaze threatens"
+  },
+  "Buzz Lightyear": {
+    "available": false,
+    "_note": "limited-time event brawler, not in the game now (user, 2026-10-15)"
+  },
+  "Kit": {
+    "over_walls": true,
+    "_note": "jumps onto teammates and throws over walls from there (user, 2026-10-15); treated as always able to hit over walls"
+  }
+}

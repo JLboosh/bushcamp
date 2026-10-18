@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+.pytest_cache/
+data/frames/
+*.mp4
+*.mov
+data/roboflow_upload/
+data/prelabels/
+data/prelabel_viz/
+data/labeled/
+data/dataset/
+runs/
+*.pt
+data/brawlers/portraits/
+data/brawlers/hud_icons/
+storage/
